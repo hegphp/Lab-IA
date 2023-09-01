@@ -1,0 +1,10 @@
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Teacher.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/NhapDiem/utils/HibernateUtils.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/NhapDiem.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Course.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/SubjectType.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Subject.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Score.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Semester.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Grade.java
+/home/Hegphp/NetBeansProjects/Homework/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Student.java
