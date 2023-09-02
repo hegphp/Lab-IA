@@ -1,6 +1,7 @@
 com/henrygphp/nhapdiem/entities/Student.class
 com/henrygphp/nhapdiem/NhapDiem.class
 com/henrygphp/NhapDiem/utils/HibernateUtils.class
+com/henrygphp/NhapDiem/utils/GradeManager.class
 com/henrygphp/nhapdiem/entities/Score.class
 com/henrygphp/nhapdiem/entities/Grade.class
 com/henrygphp/nhapdiem/entities/Teacher.class

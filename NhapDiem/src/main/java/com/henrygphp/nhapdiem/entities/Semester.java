@@ -24,6 +24,7 @@ import java.util.Set;
 public class Semester {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SemesterId")
     private int semesterId;
     @Column(name = "`from`")
     private Date from;
