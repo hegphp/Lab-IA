@@ -27,7 +27,6 @@ public class Student {
 
     @Id
     @Column(name = "studentId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String studentId;
     @Column(name = "firstName")
     private String firstName;

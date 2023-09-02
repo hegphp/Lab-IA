@@ -53,8 +53,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(int courseId, String name, Subject subject, Semester semester) {
-        this.courseId = courseId;
+    public Course(String name, Subject subject, Semester semester) {
         this.name = name;
         this.subject = subject;
         this.semester = semester;
