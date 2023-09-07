@@ -4,15 +4,15 @@
  */
 package com.henrygphp.nhapdiem.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,27 +26,24 @@ import java.util.Set;
 public class Grade {
 
     @Id
-    @Column(name = "GradeId")
+    @Column(name = "gradeId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int gradeId;
 
     @ManyToOne
-    @JoinColumn(name = "StudentId")
+    @JoinColumn(name = "studentId")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "SemesterId")
+    @JoinColumn(name = "semesterId")
     private Semester semester;
 
     @ManyToOne
-    @JoinColumn(name = "CourseId")
+    @JoinColumn(name = "courseId")
     private Course course;
 
-    @ManyToMany
-    @JoinTable(name = "Grade_Score", joinColumns = {
-        @JoinColumn(name = "gradeId")}, inverseJoinColumns = {
-        @JoinColumn(name = "scoreId")})
-    private Set<Score> scoreList = new HashSet<>();
+    @OneToMany(mappedBy = "primaryKey.grade", cascade = CascadeType.ALL)
+    private Set<Grade_Score> grade_Scores = new HashSet<>();
 
     public Course getCourse() {
         return course;
@@ -56,12 +53,12 @@ public class Grade {
         this.course = course;
     }
 
-    public Set<Score> getScoreList() {
-        return scoreList;
+    public Set<Grade_Score> getGrade_Scores() {
+        return grade_Scores;
     }
 
-    public void setScoreList(Set<Score> scoreList) {
-        this.scoreList = scoreList;
+    public void setGrade_Scores(Set<Grade_Score> grade_Scores) {
+        this.grade_Scores = grade_Scores;
     }
 
     public Grade() {
@@ -107,10 +104,10 @@ public class Grade {
         this.gradeStatus = gradeStatus;
     }
 
-    public Grade(Student student, Semester semester, Course courseId, boolean gradeStatus) {
+    public Grade(Student student, Semester semester, Course course, boolean gradeStatus) {
         this.student = student;
         this.semester = semester;
-        this.course = courseId;
+        this.course = course;
         this.gradeStatus = gradeStatus;
     }
 

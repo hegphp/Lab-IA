@@ -1,11 +1,13 @@
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Grade.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/NhapDiem/utils/HibernateUtils.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Subject.java
+/home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/GradeScoreId.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Score.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Course.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Student.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Semester.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/SubjectType.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/NhapDiem/utils/GradeManager.java
+/home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Grade_Score.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/NhapDiem.java
 /home/Hegphp/Documents/GitHub/Lab-IA/NhapDiem/src/main/java/com/henrygphp/nhapdiem/entities/Teacher.java

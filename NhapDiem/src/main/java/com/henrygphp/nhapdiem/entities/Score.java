@@ -4,12 +4,11 @@
  */
 package com.henrygphp.nhapdiem.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,21 +25,24 @@ public class Score {
     private String scoreId;
     
     private String scoreName;
-    private float Score;
-    private float weight;
     
-    @ManyToMany
-    @JoinTable(name = "Grade_Score", joinColumns = {@JoinColumn(name = "scoreId")}, inverseJoinColumns = {@JoinColumn(name = "gradeId")})
-    private Set<Grade> gradeList = new HashSet<>();
+    @OneToMany(mappedBy = "primaryKey.score", cascade = CascadeType.ALL)
+    private Set<Grade_Score> grade_Scores = new HashSet<>();
 
     public Score() {
     }
 
-    public Score(String scoreId, String scoreName, float Score, float weight) {
+    public Set<Grade_Score> getGrade_Scores() {
+        return grade_Scores;
+    }
+
+    public void setGrade_Scores(Set<Grade_Score> grade_Scores) {
+        this.grade_Scores = grade_Scores;
+    }
+
+    public Score(String scoreId, String scoreName) {
         this.scoreId = scoreId;
         this.scoreName = scoreName;
-        this.Score = Score;
-        this.weight = weight;
     }
 
     public String getScoreId() {
@@ -58,29 +60,4 @@ public class Score {
     public void setScoreName(String scoreName) {
         this.scoreName = scoreName;
     }
-
-    public float getScore() {
-        return Score;
-    }
-
-    public void setScore(float Score) {
-        this.Score = Score;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public Set<Grade> getGradeList() {
-        return gradeList;
-    }
-
-    public void setGradeList(Set<Grade> gradeList) {
-        this.gradeList = gradeList;
-    }
-    
 }

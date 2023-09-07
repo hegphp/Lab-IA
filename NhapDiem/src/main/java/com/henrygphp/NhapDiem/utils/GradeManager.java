@@ -90,10 +90,5 @@ public class GradeManager {
     }
 
     private void displayStudentGrade(Grade grade) {
-        System.out.println("Grade of Student "+grade.getStudent().getStudentId()+" in Class "+grade.getCourse().getName()+":");
-        //Access every element of Grade table
-        for(Score sc : grade.getScoreList()){
-            System.out.println(sc.getScoreId()+"--"+(int)(sc.getWeight()*100)+"%--"+sc.getScore());
-        }
     }
 }

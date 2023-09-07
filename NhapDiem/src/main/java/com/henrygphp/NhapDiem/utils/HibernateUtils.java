@@ -3,6 +3,7 @@ package com.henrygphp.NhapDiem.utils;
 
 import com.henrygphp.nhapdiem.entities.Course;
 import com.henrygphp.nhapdiem.entities.Grade;
+import com.henrygphp.nhapdiem.entities.Grade_Score;
 import com.henrygphp.nhapdiem.entities.Score;
 import com.henrygphp.nhapdiem.entities.Semester;
 import com.henrygphp.nhapdiem.entities.Student;
@@ -44,12 +45,15 @@ public class HibernateUtils {
         
             configuration.addAnnotatedClass(Course.class);
             configuration.addAnnotatedClass(Teacher.class);
-            configuration.addAnnotatedClass(Score.class);
             configuration.addAnnotatedClass(Semester.class);
             configuration.addAnnotatedClass(Student.class);
             configuration.addAnnotatedClass(Subject.class);
             configuration.addAnnotatedClass(SubjectType.class);
+            
+            configuration.addAnnotatedClass(Grade_Score.class);
+            configuration.addAnnotatedClass(Score.class);
             configuration.addAnnotatedClass(Grade.class);
+            
         
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);

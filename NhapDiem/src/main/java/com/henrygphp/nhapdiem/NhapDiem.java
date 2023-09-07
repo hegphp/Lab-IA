@@ -7,6 +7,7 @@ import com.henrygphp.NhapDiem.utils.GradeManager;
 import com.henrygphp.NhapDiem.utils.HibernateUtils;
 import com.henrygphp.nhapdiem.entities.Course;
 import com.henrygphp.nhapdiem.entities.Grade;
+import com.henrygphp.nhapdiem.entities.Grade_Score;
 import com.henrygphp.nhapdiem.entities.Score;
 import com.henrygphp.nhapdiem.entities.Semester;
 import com.henrygphp.nhapdiem.entities.Student;
@@ -41,7 +42,7 @@ public class NhapDiem {
             System.out.print("Input your choice: ");
             int choice = Integer.parseInt(sc.nextLine());
             //Run fuction depends on user's choice
-            switch(choice){
+            switch (choice) {
                 //Option 1: Show infomation
                 case 1:
                     manage.showInformation();
@@ -59,14 +60,12 @@ public class NhapDiem {
         }
     }
 
-    private static void addData(){
+    private static void addData() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         Session session = sessionFactory.openSession();
         try {
             //Create a transaction
             session.beginTransaction();
-
-            session.getTransaction().commit();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             List<Semester> semesterList = session.createQuery("From Semester").getResultList();
             //Insert subject type data (if empty)--------------------------------------------------------
@@ -75,14 +74,15 @@ public class NhapDiem {
                 Semester semester1 = new Semester(new Date(sdf.parse("01/01/2003").getTime()), new Date(sdf.parse("30/04/2003").getTime()), "Spring 2003");
                 Semester semester2 = new Semester(new Date(sdf.parse("01/05/2003").getTime()), new Date(sdf.parse("31/08/2003").getTime()), "Summer 2003");
                 Semester semester3 = new Semester(new Date(sdf.parse("01/09/2003").getTime()), new Date(sdf.parse("31/12/2003").getTime()), "Fall 2003");
-                Semester semester4 = new Semester(new Date(sdf.parse("01/01/2003").getTime()), new Date(sdf.parse("30/04/2003").getTime()), "Spring 2004");
-                Semester semester5 = new Semester(new Date(sdf.parse("01/05/2003").getTime()), new Date(sdf.parse("31/08/2003").getTime()), "Summer 2004");
+                Semester semester4 = new Semester(new Date(sdf.parse("01/01/2004").getTime()), new Date(sdf.parse("30/04/2003").getTime()), "Spring 2004");
+                Semester semester5 = new Semester(new Date(sdf.parse("01/05/2004").getTime()), new Date(sdf.parse("31/08/2003").getTime()), "Summer 2004");
 
                 session.persist(semester1);
                 session.persist(semester2);
                 session.persist(semester3);
                 session.persist(semester4);
                 session.persist(semester5);
+                session.flush();
             }
 
             //Insert subject type data--------------------------------------------------------
@@ -106,12 +106,12 @@ public class NhapDiem {
             //check if the Subject table is empty or not
             if (subjectList.isEmpty()) {
                 Query query = session.createQuery("From SubjectType");
-                List<SubjectType> result = query.getResultList();
-                Subject subject1 = new Subject("SWT301", "Software Testing", result.get(0), 3, 5250000, 6825000);
-                Subject subject2 = new Subject("SWR302", "Software Requirement", result.get(0), 3, 5250000, 6825000);
-                Subject subject3 = new Subject("SWP391", "Application development project", result.get(0), 3, 5250000, 6825000);
-                Subject subject4 = new Subject("SWE201c", "Introduction to Software Enginerring", result.get(0), 3, 5250000, 6825000);
-                Subject subject5 = new Subject("SWD392", "SW Architecture and Design", result.get(0), 3, 5250000, 6825000);
+                SubjectType type = session.get(SubjectType.class, new Integer(1));
+                Subject subject1 = new Subject("SWT301", "Software Testing", type, 3, 5250000, 6825000);
+                Subject subject2 = new Subject("SWR302", "Software Requirement", type, 3, 5250000, 6825000);
+                Subject subject3 = new Subject("SWP391", "Application development project", type, 3, 5250000, 6825000);
+                Subject subject4 = new Subject("SWE201c", "Introduction to Software Enginerring", type, 3, 5250000, 6825000);
+                Subject subject5 = new Subject("SWD392", "SW Architecture and Design", type, 3, 5250000, 6825000);
 
                 session.persist(subject1);
                 session.persist(subject2);
@@ -155,8 +155,19 @@ public class NhapDiem {
             //Check if course table is empty or not
             if (session.createQuery("From Course").list().isEmpty()) {
                 List<Course> courseInputList = new ArrayList<Course>();
-                List<Subject> subjects = session.createQuery("From Subject").getResultList();
-                List<Semester> semesters = session.createQuery("From Semester").getResultList();
+
+                Subject subject = session.get(Subject.class, new String("SWT"));
+
+                List<Subject> subjects = new ArrayList();
+                subjects.add(session.get(Subject.class, new String("SWT301")));
+                subjects.add(session.get(Subject.class, new String("SWR302")));
+                subjects.add(session.get(Subject.class, new String("SWP391")));
+                subjects.add(session.get(Subject.class, new String("SWE201c")));
+                subjects.add(session.get(Subject.class, new String("SWD392")));
+
+                List<Semester> semesters = new ArrayList();
+                semesters.add(session.get(Semester.class, new Integer(1)));
+
                 List<Student> students = session.createQuery("From Student").getResultList();
 
                 courseInputList.add(new Course("SE1737", subjects.get(0), semesters.get(0)));
@@ -171,43 +182,32 @@ public class NhapDiem {
                     session.persist(courseInputList.get(i));
                 }
             }
-            //Insert Grade Data
-            //check if Grade table is empty or not
-            if (session.createQuery("From Grade").getResultList().isEmpty()) {
-                List<Grade> grades = new ArrayList();
-                List<Student> students = session.createQuery("From Student").getResultList();
-                List<Semester> semesters = session.createQuery("From Semester").getResultList();
-                List<Course> courses = session.createQuery("From Course").getResultList();
-                //Add grade for all student in Course: SE1737, semester 1
-                for (int i = 0; i < courses.get(0).getStudentList().size(); i++) {
-                    grades.add(new Grade(students.get(i), semesters.get(0), courses.get(0), false));
-                    session.persist(grades.get(i));
-                }
-            }
             //Insert Score data
-            //Check if Score table is empty or not
+//            Check if Score table is empty or not
             if (session.createQuery("From Score").getResultList().isEmpty()) {
                 List<Score> scores = new ArrayList();
-                scores.add(new Score("PE_30", "Practice Exam", 0, 0.3f));
-                scores.add(new Score("FE_30", "Final Exam", 0, 0.3f));
-                scores.add(new Score("PT_10", "Progress test", 0, 0.1f));
-                scores.add(new Score("Asignment_20", "Assignment", 0, 0.2f));
-                scores.add(new Score("Presentation_10", "Presentation", 0, 0.2f));
+                scores.add(new Score("PE", "Practice Exam"));
+                scores.add(new Score("FE", "Final Exam"));
+                scores.add(new Score("PT", "Progress test"));
+                scores.add(new Score("Asignment", "Assignment"));
+                scores.add(new Score("Presentation", "Presentation"));
                 //Save scores list to database
                 for (Score s : scores) {
                     session.persist(s);
                 }
-                //Add data to grade which has subject 
-                List<Grade> grades = session.createQuery("From Grade").getResultList();
-                //Access every elements of grades table with name = "SE1737" (all grade table)
-                for (Grade g : grades) {
-                    //Access every elements of Score table
-                    for (Score s : scores) {
-                        g.getScoreList().add(s);
-                        session.persist(g);
-                    }
-                }
             }
+
+            //Insert grade data
+            //Insert Grade_Score table
+//            if(session.createQuery("From Grade_Score").getResultList().isEmpty()){
+//                Grade grade = session.get(Grade.class, new Integer(23));
+//                
+//                Grade_Score grade_Score = new Grade_Score();
+//                grade_Score.setGrade(grade);
+//                grade_Score.setScore();
+//            }
+            session.flush();
+            session.getTransaction().commit();
         } catch (Exception ex) {
             if (session.getTransaction() != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
